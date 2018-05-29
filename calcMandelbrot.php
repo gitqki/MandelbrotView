@@ -44,24 +44,24 @@ Class CalcMandelbrot
         */
         $response = file_get_contents('http://192.168.214.83/index.php?RESTurl=api&real=' . $this->real . '&imaginary=' . $this->imaginary . '&bsize=' . $this->bsize . '&resolution=' . $this->res . '');
 
-        $res = json_decode($response);
-
         //print_r(array_chunk($res, $steps, true));
-        $res = array_chunk($res, $this->steps);
+        //$res = array_chunk($res, $this->steps);
 
-        for ($o=1; $o < $this->steps-1; $o++) {
+        /* for ($o=1; $o < $this->steps-1; $o++) {
             for ($i=0; $i < $this->steps-1; $i++) {
                 echo json_decode($res[$o][$i]);
             }
             echo "<br/>";
-        }
+        } */
+
         $x = 0;
         $con = $this->steps;
+        echo $response;
 
-        while ($con > $x) {
+        /* while ($con > $x) {
             //echo json_encode($res[$x]);
             $x++;
-        }
+        } */
     }
 }
 $cb = new CalcMandelbrot(2,0.1,-2,-2);

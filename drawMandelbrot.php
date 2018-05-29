@@ -51,7 +51,9 @@ class DrawMandelbrot
                     }
                 }
                 if ($i < 100) {
-                    imagesetpixel($im, $x, $y, $white_color);
+
+                    echo $y;
+                    //imagesetpixel($im, $x, $y, $white_color);
                 }
             }
         }
@@ -61,4 +63,5 @@ class DrawMandelbrot
     }
 
 }
+new DrawMandelbrot(2,0.1,-2,-2);
 ?>
