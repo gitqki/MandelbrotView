@@ -7,6 +7,7 @@ Class CalcMandelbrot
     public $real;
     public $imaginary;
     public $steps;
+    public $set;
 
     /**
      * CalcMandelbrot constructor.
@@ -31,39 +32,27 @@ Class CalcMandelbrot
         * Calculate steps
         */
         $y = 0;
+
         while ($this->bsize >= $y) {
             $this->steps += $y;
             $y += $this->res;
         }
 
-        echo "Steps: " . $this->steps;
-        echo "<br/>";
+        //echo "Steps: " . $this->steps;
+        //echo "<br/>";
 
         /*
         * Call API for calculation of Mandelbrot set
         */
-        $response = file_get_contents('http://192.168.214.83/index.php?RESTurl=api&real=' . $this->real . '&imaginary=' . $this->imaginary . '&bsize=' . $this->bsize . '&resolution=' . $this->res . '');
+        //$response = file_get_contents('http://192.168.214.83/index.php?RESTurl=api&real=' . $this->real . '&imaginary=' . $this->imaginary . '&bsize=' . $this->bsize . '&resolution=' . $this->res . '');
+        $this->set = array(
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 4, 0, 0, 0, 0, 1, 1, 2, 2, 2, 4, 5, 0,
+            0, 0, 0, 1, 1, 2, 2, 2, 6, 17, 0, 0, 0, 1, 1, 2, 2, 2, 3, 6, 0, 0, 0, 1, 1, 1, 2, 2, 3, 4, 6, 14, 0, 0, 1, 1, 1, 2, 3, 3, 11, 0, 0, 0,
+            0, 1, 1, 1, 2, 3, 5, 25, 0, 0, 0, 0, 1, 1, 1, 2, 6, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 43, 17, 0, 0, 0, 0);
 
-        //print_r(array_chunk($res, $steps, true));
-        //$res = array_chunk($res, $this->steps);
-
-        /* for ($o=1; $o < $this->steps-1; $o++) {
-            for ($i=0; $i < $this->steps-1; $i++) {
-                echo json_decode($res[$o][$i]);
-            }
-            echo "<br/>";
-        } */
-
-        $x = 0;
-        $con = $this->steps;
-        echo $response;
-
-        /* while ($con > $x) {
-            //echo json_encode($res[$x]);
-            $x++;
-        } */
     }
 }
-$cb = new CalcMandelbrot(2,0.1,-2,-2);
+
+$cb = new CalcMandelbrot(2, 0.1, -2, -2);
 $cb->calc();
 ?>
