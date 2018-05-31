@@ -1,13 +1,13 @@
 <?php
-include_once 'drawMandelbrot.php';
-/*
- * Test Content
- * Steps: 11
- * [0,0,0,0,0,0,0,0,0,0,0][0,0,0,0,0,0,1,2,2,3,0][0,0,0,0,0,1,2,2,2,4,0][0,0,0,1,1,2,2,2,4,5,0]
- * [0,0,0,1,1,2,2,2,6,17,0][0,0,1,1,2,2,2,3,6,0,0][0,1,1,1,2,2,3,4,6,14,0][0,1,1,1,2,3,3,11,0,0,0]
- * [0,1,1,1,2,3,5,25,0,0,0][0,1,1,1,2,6,0,0,0,0,0][0,1,1,1,2,43,17,0,0,0,0]
+/**
+ * @Author: Stefan Behnert
+ * @Updated: 31.05.2018
+ * @Email: st.behnert@gmail.com
  */
 
-$dm = new DrawMandelbrot(2,0.3,-3,-3);
+include_once 'calcMandelbrot.php';
+include_once 'drawMandelbrot.php';
+
+$calcMandelbrot = new CalcMandelbrot(5, 0.07, -2, -2);
 
 ?>
