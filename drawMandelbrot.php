@@ -39,7 +39,7 @@ class DrawMandelbrot
         $this->set = $set;
     }
     private function fillPixel($im, $count_x, $count_y, $depth) {
-        $white_color = imagecolorallocatealpha($im, 198, 40, 40, ($depth * $this->maxIteration/100));
+        $white_color = imagecolorallocatealpha($im, 198, 40, 40, ($depth * 100)/$this->maxIteration);
         imagepalettetotruecolor ( $im );
         imagesetpixel($im, $count_x, $count_y, $white_color);
     }
@@ -49,7 +49,7 @@ class DrawMandelbrot
     public function draw()
     {
         // Tell Site to be Type: Image
-        header("Content-Type: image/png");
+        //header("Content-Type: image/png");
 
         $x_steps = count(range($this->realFrom, $this->realTo, $this->intervall));
         $y_steps = count(range($this->imaginaryFrom, $this->imaginaryTo, $this->intervall));
@@ -73,17 +73,17 @@ class DrawMandelbrot
 
         foreach ($this->set as $set)
         {
-            //echo $set;
+            echo $set;
             if ($count_y >= $y_steps)
             {
-               // echo "<br>";
+                echo "<br>";
                 $count_x++;
                 $count_y = 0;
             }
             if ($set != 0)
             {
                 // Draw Mandelbrot points
-                $this->fillPixel($im, $count_x, $count_y, $set);
+                //$this->fillPixel($im, $count_x, $count_y, $set);
             }
             $count_y++;
         }
