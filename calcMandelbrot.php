@@ -109,28 +109,19 @@ Class CalcMandelbrot /*
 
         /**
          * Call API POST
-         *
-         $postData = array(
-        'realFrom' => '-2',
-        'realTo' => '2',
-        'imaginaryFrom' => '-2',
-        'imaginaryTo' => '2',
-        'intervall' => '0.005',
-        'maxIteration' => '500'
-        );
          */
         // The data to send to the API
-        // 59
-        // 41
-        // 69
-        $postServer = "http://192.168.214.69:8080/";
+        // 59 Server - Chris
+        // 41 Server - Sasette
+        // 69 Server - ?
+        $postServer = "http://192.168.1.6:8080/";
         $postData = array(
-            'realFrom' => '-2',
-            'realTo' => '2',
-            'imaginaryFrom' => '-2',
-            'imaginaryTo' => '2',
-            'intervall' => '0.005',
-            'maxIteration' => '500'
+            'realFrom' => $this->realFrom,
+            'realTo' => $this->realTo,
+            'imaginaryFrom' => $this->imaginaryFrom,
+            'imaginaryTo' => $this->imaginaryTo,
+            'intervall' => $this->intervall,
+            'maxIteration' => $this->maxIteration
         );
         
         $this->curl_post_content($postData, $postServer);
