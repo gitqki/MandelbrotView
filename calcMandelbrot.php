@@ -6,8 +6,7 @@
  * @Updated: 31.05.2018
  * @Email: st.behnert@gmail.com
  */
-Class CalcMandelbrot
-/*
+Class CalcMandelbrot /*
  * Test Content
  * $this->set = array(
  * 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,3,3,0,0,0,0,0,0,0,
@@ -21,25 +20,32 @@ Class CalcMandelbrot
  * )
  */
 {
-    public $bsize;
-    public $res;
-    public $real;
-    public $imaginary;
+    public $realFrom;
+    public $realTo;
+    public $imaginaryFrom;
+    public $imaginaryTo;
+    public $intervall;
+    public $maxIteration;
     public $set;
+
 
     /**
      * CalcMandelbrot constructor.
-     * @param $bsize
-     * @param $res
-     * @param $real
-     * @param $imaginary
+     * @param $realFrom
+     * @param $realTo
+     * @param $imaginaryFrom
+     * @param $imaginaryTo
+     * @param $intervall
+     * @param $maxIteration
      */
-    public function __construct($bsize, $res, $real, $imaginary)
+    public function __construct($realFrom, $realTo, $imaginaryFrom, $imaginaryTo, $intervall, $maxIteration)
     {
-        $this->bsize = $bsize;
-        $this->res = $res;
-        $this->real = $real;
-        $this->imaginary = $imaginary;
+        $this->realFrom = $realFrom;
+        $this->realTo = $realTo;
+        $this->imaginaryFrom = $imaginaryFrom;
+        $this->imaginaryTo = $imaginaryTo;
+        $this->intervall = $intervall;
+        $this->maxIteration = $maxIteration;
         $this->init();
     }
 
@@ -47,7 +53,7 @@ Class CalcMandelbrot
      * @param $url -> String
      * @return mixed
      */
-    function curl_get_contents($url)
+    private function curl_get_contents($url)
     {
         $ch = curl_init();
 
@@ -61,27 +67,80 @@ Class CalcMandelbrot
         return $data;
     }
 
-    function init()
+
+    /**
+     * @param $postData -> array()
+     * @param $server -> String
+     * @return mixed
+     */
+    private function curl_post_content($postData , $server)
+    {
+        // Setup cURL
+        $ch = curl_init($server);
+        curl_setopt_array($ch, array(CURLOPT_POST => TRUE, CURLOPT_RETURNTRANSFER => TRUE, CURLOPT_HTTPHEADER => array('Content-Type: application/json'), CURLOPT_POSTFIELDS => json_encode($postData)));
+
+        // Send the request
+        $response = curl_exec($ch);
+
+        // Check for errors
+        if ($response === FALSE) {
+            die(curl_error($ch));
+        }
+
+        // Decode the response
+        $json = json_decode($response, true);
+        $this->set = $json['response'];
+        return $this->set;
+    }
+
+    /**
+     *
+     */
+    private function init()
     {
 
 
         /**
-         * Call API
+         * Call API GET
          */
-        $response = $this->curl_get_contents
-        (
-            'http://localhost:63342/MandelbrotServer/content/index.php?RESTurl=api&real='
-            . $this->real . '&imaginary='
-            . $this->imaginary . '&bsize='
-            . $this->bsize . '&resolution='
-            . $this->res . ''
-        );
-        $this->set = json_decode($response);
+        $response = $this->curl_get_contents('http://192.168.214.83/api?realFrom=' . $this->realFrom . '&realTo=' . $this->realTo . '&imaginaryFrom=' . $this->imaginaryFrom . '&imaginaryTo=' . $this->imaginaryTo . '&intervall=' . $this->intervall . '&maxIteration=' . $this->maxIteration . '');
 
+        //$this->set =  json_decode($response) ? json_decode($response) : die("Server not reachable.");;
+
+        /**
+         * Call API POST
+         *
+         $postData = array(
+        'realFrom' => '-2',
+        'realTo' => '2',
+        'imaginaryFrom' => '-2',
+        'imaginaryTo' => '2',
+        'intervall' => '0.005',
+        'maxIteration' => '500'
+        );
+         */
+        // The data to send to the API
+        // 59
+        // 41
+        // 69
+        $postServer = "http://192.168.214.69:8080/";
+        $postData = array(
+            'realFrom' => '-2',
+            'realTo' => '2',
+            'imaginaryFrom' => '-2',
+            'imaginaryTo' => '2',
+            'intervall' => '0.005',
+            'maxIteration' => '500'
+        );
+        
+        $this->curl_post_content($postData, $postServer);
+        //var_dump($this->set);
+
+        //exit;
         /**
          * DrawMandelbrot
          */
-        $drawMandelbrot = new DrawMandelbrot($this->bsize, $this->res, $this->real, $this->imaginary, $this->set);
+        $drawMandelbrot = new DrawMandelbrot($this->realFrom, $this->realTo, $this->imaginaryFrom, $this->imaginaryTo, $this->intervall, $this->maxIteration, $this->set);
         $drawMandelbrot->draw();
 
     }

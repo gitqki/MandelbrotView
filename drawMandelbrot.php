@@ -9,65 +9,81 @@
 class DrawMandelbrot
 {
 
-    public $set;
-    public $res;
-    public $real;
-    public $bsize;
-    public $imaginary;
+    private $set;
+    private $realFrom;
+    private $realTo;
+    private $imaginaryFrom;
+    private $imaginaryTo;
+    private $intervall;
+    private $maxIteration;
+
 
     /**
      * DrawMandelbrot constructor.
-     * @param $bsize
-     * @param $res
-     * @param $real
-     * @param $imaginary
+     * @param $realFrom
+     * @param $realTo
+     * @param $imaginaryFrom
+     * @param $imaginaryTo
+     * @param $intervall
+     * @param $maxIteration
+     * @param $set
      */
-    function __construct($bsize, $res, $real, $imaginary, $set)
+    public function __construct($realFrom, $realTo, $imaginaryFrom, $imaginaryTo, $intervall, $maxIteration, $set)
     {
-        $this->bsize = $bsize;
-        $this->res = $res;
-        $this->real = $real;
-        $this->imaginary = $imaginary;
+        $this->realFrom = $realFrom;
+        $this->realTo = $realTo;
+        $this->imaginaryFrom = $imaginaryFrom;
+        $this->imaginaryTo = $imaginaryTo;
+        $this->intervall = $intervall;
+        $this->maxIteration = $maxIteration;
         $this->set = $set;
     }
-
+    private function fillPixel($im, $count_x, $count_y, $depth) {
+        $white_color = imagecolorallocatealpha($im, 198, 40, 40, ($depth * $this->maxIteration/100));
+        imagepalettetotruecolor ( $im );
+        imagesetpixel($im, $count_x, $count_y, $white_color);
+    }
     /**
      *
      */
-    function draw()
+    public function draw()
     {
         // Tell Site to be Type: Image
         header("Content-Type: image/png");
 
+        $x_steps = count(range($this->realFrom, $this->realTo, $this->intervall));
+        $y_steps = count(range($this->imaginaryFrom, $this->imaginaryTo, $this->intervall));
+
         // Resolution for Image
-        $res_x = (4.5 / $this->res);
-        $res_y = (4.5 / $this->res);
+        $res_x = ($x_steps);
+        $res_y = ($y_steps);
 
         $im = @imagecreate($res_x, $res_y) or die("Cannot Initialize new GD image stream");
 
         // Color for Image
-        $black_color = imagecolorallocate($im, 0, 0, 0);
+        $black_color = imagecolorallocatealpha($im, 0, 0, 0, 10);
         $white_color = imagecolorallocate($im, 255, 255, 255);
 
         imagefill($im, 0, 0, $black_color);
 
-        $x_steps = count(range($this->real, $this->real + $this->bsize, $this->res));
-        $y_steps = count(range($this->imaginary, $this->imaginary + $this->bsize, $this->res));
+
 
         $count_x = 0;
         $count_y = 0;
 
         foreach ($this->set as $set)
         {
+            //echo $set;
             if ($count_y >= $y_steps)
             {
+               // echo "<br>";
                 $count_x++;
                 $count_y = 0;
             }
             if ($set != 0)
             {
                 // Draw Mandelbrot points
-                imagesetpixel($im, $count_x, $count_y, $white_color);
+                $this->fillPixel($im, $count_x, $count_y, $set);
             }
             $count_y++;
         }

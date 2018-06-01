@@ -8,6 +8,7 @@
 include_once 'calcMandelbrot.php';
 include_once 'drawMandelbrot.php';
 
-$calcMandelbrot = new CalcMandelbrot(5, 0.07, -2, -2);
+set_time_limit(300);
+$calcMandelbrot = new CalcMandelbrot(-2, 2, -2, 2, 0.1, 500);
 
 ?>
