@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class CalcMandelbrot
  * @Author: Stefan Behnert
@@ -27,8 +26,6 @@ Class CalcMandelbrot /*
     public $intervall;
     public $maxIteration;
     public $set;
-
-
     /**
      * CalcMandelbrot constructor.
      * @param $realFrom
@@ -48,7 +45,6 @@ Class CalcMandelbrot /*
         $this->maxIteration = $maxIteration;
         $this->init();
     }
-
     /**
      * @param $url -> String
      * @return mixed
@@ -56,18 +52,13 @@ Class CalcMandelbrot /*
     private function curl_get_contents($url)
     {
         $ch = curl_init();
-
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
-
         $data = curl_exec($ch);
         curl_close($ch);
-
         return $data;
     }
-
-
     /**
      * @param $postData -> array()
      * @param $server -> String
@@ -78,35 +69,27 @@ Class CalcMandelbrot /*
         // Setup cURL
         $ch = curl_init($server);
         curl_setopt_array($ch, array(CURLOPT_POST => TRUE, CURLOPT_RETURNTRANSFER => TRUE, CURLOPT_HTTPHEADER => array('Content-Type: application/json'), CURLOPT_POSTFIELDS => json_encode($postData)));
-
         // Send the request
         $response = curl_exec($ch);
-
         // Check for errors
         if ($response === FALSE) {
             die(curl_error($ch));
         }
-
         // Decode the response
         $json = json_decode($response, true);
-        $this->set = $json['response'];
+        $this->set = $json;
         return $this->set;
     }
-
     /**
      *
      */
     private function init()
     {
-
-
         /**
          * Call API GET
          */
         $response = $this->curl_get_contents('http://192.168.214.83/api?realFrom=' . $this->realFrom . '&realTo=' . $this->realTo . '&imaginaryFrom=' . $this->imaginaryFrom . '&imaginaryTo=' . $this->imaginaryTo . '&intervall=' . $this->intervall . '&maxIteration=' . $this->maxIteration . '');
-
         //$this->set =  json_decode($response) ? json_decode($response) : die("Server not reachable.");;
-
         /**
          * Call API POST
          */
@@ -114,7 +97,7 @@ Class CalcMandelbrot /*
         // 59 Server - Chris
         // 41 Server - Sasette
         // 69 Server - ?
-        $postServer = "http://192.168.1.6:8080/";
+        $postServer = "localhost/mandelbrot";
         $postData = array(
             'realFrom' => $this->realFrom,
             'realTo' => $this->realTo,
@@ -123,18 +106,15 @@ Class CalcMandelbrot /*
             'intervall' => $this->intervall,
             'maxIteration' => $this->maxIteration
         );
-        
+
         $this->curl_post_content($postData, $postServer);
         //var_dump($this->set);
-
         //exit;
         /**
          * DrawMandelbrot
          */
         $drawMandelbrot = new DrawMandelbrot($this->realFrom, $this->realTo, $this->imaginaryFrom, $this->imaginaryTo, $this->intervall, $this->maxIteration, $this->set);
         $drawMandelbrot->draw();
-
     }
 }
-
 ?>
