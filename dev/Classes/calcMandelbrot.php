@@ -8,32 +8,14 @@
 Class CalcMandelbrot
 {
     public $server;
-    public $realFrom;
-    public $realTo;
-    public $imaginaryFrom;
-    public $imaginaryTo;
-    public $intervall;
-    public $maxIteration;
     public $set;
+    public $sets;
+    public $coord;
 
-    /**
-     * CalcMandelbrot constructor.
-     * @param $realFrom
-     * @param $realTo
-     * @param $imaginaryFrom
-     * @param $imaginaryTo
-     * @param $intervall
-     * @param $maxIteration
-     */
-    public function __construct($server ,$realFrom, $realTo, $imaginaryFrom, $imaginaryTo, $intervall, $maxIteration)
+    public function __construct($server , $coord)
     {
         $this->server = $server;
-        $this->realFrom = $realFrom;
-        $this->realTo = $realTo;
-        $this->imaginaryFrom = $imaginaryFrom;
-        $this->imaginaryTo = $imaginaryTo;
-        $this->intervall = $intervall;
-        $this->maxIteration = $maxIteration;
+        $this->coord = $coord;
         $this->CalcMandelbrot();
     }
     /**
@@ -71,7 +53,8 @@ Class CalcMandelbrot
         }
         // Decode the response
         $json = json_decode($response, true);
-        $this->set = $json["response"];
+        $this->sets[] = $json["response"];
+
     }
     /**
      *
@@ -87,21 +70,23 @@ Class CalcMandelbrot
          * Call API POST
          */
         $postServer = $this->server;
-        $postData = array(
-            'realFrom' => $this->realFrom,
-            'realTo' => $this->realTo,
-            'imaginaryFrom' => $this->imaginaryFrom,
-            'imaginaryTo' => $this->imaginaryTo,
-            'interval' => $this->intervall,
-            'maxIteration' => $this->maxIteration
-        );
 
-        $this->curl_post_content($postData, $postServer);
+        foreach($this->coord as $coord) {
+            $postData = array(
+                'realFrom' => $coord["realFrom"],
+                'realTo' => $coord["realTo"],
+                'imaginaryFrom' => $coord["imaginaryFrom"],
+                'imaginaryTo' => $coord["imaginaryTo"],
+                'interval' => $coord["interval"],
+                'maxIteration' => $coord["maxIteration"]
+            );
+            $this->curl_post_content($postData, $postServer);
+        }
 
         /**
          * DrawMandelbrot
          */
-        $drawMandelbrot = new DrawMandelbrot($this->realFrom, $this->realTo, $this->imaginaryFrom, $this->imaginaryTo, $this->intervall, $this->maxIteration, $this->set);
+        $drawMandelbrot = new DrawMandelbrot($this->coord, $this->sets);
         $drawMandelbrot->DrawMandelbrot();
     }
 }
