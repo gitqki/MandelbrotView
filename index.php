@@ -17,9 +17,11 @@ ini_set('memory_limit', '-1');
 // 41 Server - Sasette
 // 69 Server - ?
 // 83 Server - AN
+// 61 Server - Nils
+// 45 Server - Alex
 
 //$calcMandelbrot = new CalcMandelbrot(-1.1883796296296296, -1.1121425925925925, 0.24499722222222214, 0.30217499999999997, 0.0001, 255);
 
-$calcMandelbrot = new CalcMandelbrot("http://192.168.214.83/mandelbrot", -1, 1, -1, 1, 0.007, 255);
+$calcMandelbrot = new CalcMandelbrot("http://192.168.214.45:8080", -2, 1, -1, 1, 0.005, 255);
 
 ?>

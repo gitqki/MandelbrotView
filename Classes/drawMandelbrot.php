@@ -72,8 +72,10 @@ class DrawMandelbrot
 
         foreach ($this->set as $set)
         {
+            //echo $set;
             if ($count_y >= $y_steps)
             {
+                //echo "<br>";
                 $count_x++;
                 $count_y = 0;
             }

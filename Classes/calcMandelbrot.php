@@ -71,7 +71,7 @@ Class CalcMandelbrot
         }
         // Decode the response
         $json = json_decode($response, true);
-        $this->set = $json;
+        $this->set = $json["response"];
     }
     /**
      *
@@ -92,7 +92,7 @@ Class CalcMandelbrot
             'realTo' => $this->realTo,
             'imaginaryFrom' => $this->imaginaryFrom,
             'imaginaryTo' => $this->imaginaryTo,
-            'intervall' => $this->intervall,
+            'interval' => $this->intervall,
             'maxIteration' => $this->maxIteration
         );
 
