@@ -5,20 +5,9 @@
  * @Updated: 31.05.2018
  * @Email: st.behnert@gmail.com
  */
-Class CalcMandelbrot /*
- * Test Content
- * $this->set = array(
- * 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,3,3,0,0,0,0,0,0,0,
- * 0,0,0,0,0,1,1,2,2,2,3,3,3,0,0,0,0,0,0,0,0,0,0,1,1,2,2,2,2,2,3,3,5,0,0,0,0,0,0,0,0,1,1,1,2,2,2,2,2,2,3,4,5,0,0,0,0,
- * 0,0,0,1,1,1,1,2,2,2,2,2,3,4,4,6,0,0,0,0,0,0,1,1,1,1,2,2,2,2,2,2,4,4,5,11,0,0,0,0,0,1,1,1,1,2,2,2,2,2,2,3,6,6,7,13,
- * 0,0,0,0,1,1,1,1,1,2,2,2,2,2,2,4,6,15,17,0,0,0,0,0,1,1,1,1,2,2,2,2,2,2,3,4,6,11,0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,
- * 4,6,0,0,0,0,0,0,1,1,1,1,1,2,2,2,2,3,3,4,4,6,10,0,0,0,0,1,1,1,1,1,1,2,2,2,3,3,3,4,5,6,8,14,0,0,0,1,1,1,1,1,2,2,2,2,
- * 3,3,4,5,7,10,0,0,0,0,1,1,1,1,1,1,2,2,2,3,3,3,6,11,11,0,0,0,0,0,1,1,1,1,1,1,2,2,3,3,3,4,7,0,0,0,0,0,0,0,1,1,1,1,1,
- * 1,2,2,3,3,4,5,7,0,0,0,0,0,0,0,1,1,1,1,1,1,2,2,3,4,5,7,9,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,18,6,8,0,0,0,0,0,0,0,0,0,
- * 1,1,1,1,1,1,1,2,4,8,0,0,0,0,0,0,0,0,0
- * )
- */
+Class CalcMandelbrot
 {
+    public $server;
     public $realFrom;
     public $realTo;
     public $imaginaryFrom;
@@ -26,6 +15,7 @@ Class CalcMandelbrot /*
     public $intervall;
     public $maxIteration;
     public $set;
+
     /**
      * CalcMandelbrot constructor.
      * @param $realFrom
@@ -35,15 +25,16 @@ Class CalcMandelbrot /*
      * @param $intervall
      * @param $maxIteration
      */
-    public function __construct($realFrom, $realTo, $imaginaryFrom, $imaginaryTo, $intervall, $maxIteration)
+    public function __construct($server ,$realFrom, $realTo, $imaginaryFrom, $imaginaryTo, $intervall, $maxIteration)
     {
+        $this->server = $server;
         $this->realFrom = $realFrom;
         $this->realTo = $realTo;
         $this->imaginaryFrom = $imaginaryFrom;
         $this->imaginaryTo = $imaginaryTo;
         $this->intervall = $intervall;
         $this->maxIteration = $maxIteration;
-        $this->init();
+        $this->CalcMandelbrot();
     }
     /**
      * @param $url -> String
@@ -51,12 +42,15 @@ Class CalcMandelbrot /*
      */
     private function curl_get_contents($url)
     {
+        // Setup cURL
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
+        // Send request
         $data = curl_exec($ch);
         curl_close($ch);
+        // Return data
         return $data;
     }
     /**
@@ -78,26 +72,21 @@ Class CalcMandelbrot /*
         // Decode the response
         $json = json_decode($response, true);
         $this->set = $json;
-        return $this->set;
     }
     /**
      *
      */
-    private function init()
+    private function CalcMandelbrot()
     {
         /**
          * Call API GET
          */
-        $response = $this->curl_get_contents('http://192.168.214.83/api?realFrom=' . $this->realFrom . '&realTo=' . $this->realTo . '&imaginaryFrom=' . $this->imaginaryFrom . '&imaginaryTo=' . $this->imaginaryTo . '&intervall=' . $this->intervall . '&maxIteration=' . $this->maxIteration . '');
-        //$this->set =  json_decode($response) ? json_decode($response) : die("Server not reachable.");;
+        //$response = $this->curl_get_contents('http://192.168.214.83/api?realFrom=' . $this->realFrom . '&realTo=' . $this->realTo . '&imaginaryFrom=' . $this->imaginaryFrom . '&imaginaryTo=' . $this->imaginaryTo . '&intervall=' . $this->intervall . '&maxIteration=' . $this->maxIteration . '');
+
         /**
          * Call API POST
          */
-        // The data to send to the API
-        // 59 Server - Chris
-        // 41 Server - Sasette
-        // 69 Server - ?
-        $postServer = "localhost/mandelbrot";
+        $postServer = $this->server;
         $postData = array(
             'realFrom' => $this->realFrom,
             'realTo' => $this->realTo,
@@ -108,13 +97,12 @@ Class CalcMandelbrot /*
         );
 
         $this->curl_post_content($postData, $postServer);
-        //var_dump($this->set);
-        //exit;
+
         /**
          * DrawMandelbrot
          */
         $drawMandelbrot = new DrawMandelbrot($this->realFrom, $this->realTo, $this->imaginaryFrom, $this->imaginaryTo, $this->intervall, $this->maxIteration, $this->set);
-        $drawMandelbrot->draw();
+        $drawMandelbrot->DrawMandelbrot();
     }
 }
 ?>

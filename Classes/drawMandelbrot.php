@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class DrawMandelbrot
  * @Author: Stefan Behnert
@@ -8,7 +7,6 @@
  */
 class DrawMandelbrot
 {
-
     private $set;
     private $realFrom;
     private $realTo;
@@ -17,8 +15,6 @@ class DrawMandelbrot
     private $intervall;
     private $maxIteration;
     private $maxIterationInSet;
-
-
     /**
      * DrawMandelbrot constructor.
      * @param $realFrom
@@ -47,14 +43,11 @@ class DrawMandelbrot
         imagepalettetotruecolor ( $im );
         imagesetpixel($im, $count_x, $count_y, $white_color);
     }
-    /**
-     *
-     */
-    public function draw()
+
+    public function DrawMandelbrot()
     {
         // Tell Site to be Type: Image
         header("Content-Type: image/png");
-
         $x_steps = count(range($this->realFrom, $this->realTo, $this->intervall));
         $y_steps = count(range($this->imaginaryFrom, $this->imaginaryTo, $this->intervall));
 
@@ -62,31 +55,31 @@ class DrawMandelbrot
         $res_x = ($x_steps);
         $res_y = ($y_steps);
 
+        // Create Image
         $im = @imagecreate($res_x, $res_y) or die("Cannot Initialize new GD image stream");
 
-        // Color for Image
+        // Set colors for the image
         $black_color = imagecolorallocatealpha($im, 0, 0, 0, 10);
         $white_color = imagecolorallocate($im, 187, 80, 13);
 
+        // Fill Image Background
         imagefill($im, 0, 0, $black_color);
 
+        // Set max Iteration found in Set
         $this->maxIterationInSet = max($this->set);
-
         $count_x = 0;
         $count_y = 0;
 
         foreach ($this->set as $set)
         {
-            //echo $set;
             if ($count_y >= $y_steps)
             {
-                //echo "<br>";
                 $count_x++;
                 $count_y = 0;
             }
             if ($set != 0)
             {
-                // Draw Mandelbrot points
+                // Draw points into image
                 $this->fillPixel($im, $count_x, $count_y, $set);
             }
             $count_y++;
@@ -95,5 +88,4 @@ class DrawMandelbrot
         imagedestroy($im);
     }
 }
-
 ?>
