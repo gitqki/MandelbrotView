@@ -11,8 +11,8 @@
 1. Punkt 1 und 2 s.o.
 2. *{ip-adresse}*/MandelbrotView/tests/
 
-Durch ein vordefiniertes Mandelbrot-set, welches in einem json-file hinterlegt wurde, kann die Zeichnung
-direkt durchgeführt werden, ohne dafür eine API anzusprechen.
+Durch ein vordefiniertes Mandelbrot-set, welches in einem JSON-File hinterlegt wurde, kann die Zeichnung
+direkt durchgeführt werden, ohne dafür eine API ansprechen zu müssen.
 
 *Verzeichnis: tests/*
 
