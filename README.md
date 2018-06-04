@@ -1,4 +1,4 @@
-#MandelbrotView
+# MandelbrotView
 
 ### How to: View Mandelbrot?
 
@@ -20,7 +20,7 @@ direkt durchgeführt werden, ohne dafür eine API anzusprechen.
 
 Empfohlene API: [@BlackAlucarDs](https://github.com/BlackAlucarD/) [MandelbrotServer](https://github.com/BlackAlucarD/MandelBrotServer)
 
-Die Api erwartet ein JSON header mit einem POST Request mit folgenden Schlüsseln:
+Die API erwartet ein JSON header mit einem POST Request mit folgenden Schlüsseln:
 
 ```
 {
