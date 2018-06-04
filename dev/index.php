@@ -4,7 +4,7 @@
  * @Email: st.behnert@gmail.com
  */
 
-require_once "bootstrap.php";
+require_once "autoloader.php";
 
 // Set timeout to X seconds
 set_time_limit(300);
@@ -17,9 +17,9 @@ ini_set('memory_limit', '-1');
 // 69 Server - ?
 // 83 Server - AN
 
-//$calcMandelbrot = new CalcMandelbrot(-1.1883796296296296, -1.1121425925925925, 0.24499722222222214, 0.30217499999999997, 0.0001, 255);
+//$calcMandelbrot = new GetMandelbrot(-1.1883796296296296, -1.1121425925925925, 0.24499722222222214, 0.30217499999999997, 0.0001, 255);
+$server = "http://192.168.1.6/";
+$calcMandelbrot[] = array("realFrom" => -2,"realTo" => 1, "imaginaryFrom" => 0, "imaginaryTo" => 1, "interval" => 0.05, "maxIteration" => 255);
+$calcMandelbrot[] = array("realFrom" => -2,"realTo" => 1, "imaginaryFrom" => -1, "imaginaryTo" => 0, "interval" => 0.05, "maxIteration" => 255);
 
-$calcMandelbrot[0] = array("realFrom" => -2,"realTo" => 1, "imaginaryFrom" => 0, "imaginaryTo" => 1, "interval" => 0.05, "maxIteration" => 255);
-$calcMandelbrot[1] = array("realFrom" => -2,"realTo" => 1, "imaginaryFrom" => -1, "imaginaryTo" => 0, "interval" => 0.05, "maxIteration" => 255);
-
-new CalcMandelbrot("http://192.168.1.6/", $calcMandelbrot);
+new GetMandelbrot($server, $calcMandelbrot);

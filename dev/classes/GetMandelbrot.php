@@ -1,11 +1,11 @@
 <?php
 /**
- * Class CalcMandelbrot
+ * Class GetMandelbrot
  * @Author: Stefan Behnert
  * @Updated: 31.05.2018
  * @Email: st.behnert@gmail.com
  */
-Class CalcMandelbrot
+Class GetMandelbrot
 {
     public $server;
     public $set;

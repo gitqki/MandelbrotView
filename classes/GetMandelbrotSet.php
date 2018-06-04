@@ -1,6 +1,6 @@
 <?php
 /**
- * Class CalcMandelbrot
+ * Class GetMandelbrot
  * @Author: Stefan Behnert
  * @Email: st.behnert@gmail.com
  */
