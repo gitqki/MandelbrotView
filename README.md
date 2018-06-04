@@ -74,3 +74,6 @@ private function fillPixel($im, $count_x, $count_y, $depth, $skip)
     imagesetpixel($im, $count_x, $count_y, $color);
 }
 ```
+
+## Example result:
+![Example](https://user-images.githubusercontent.com/30159814/40937451-f646ece0-683e-11e8-8e46-0357a98975d8.png)
