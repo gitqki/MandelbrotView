@@ -76,9 +76,7 @@ $getMandelbrotSet[] = array("server" => "http://192.168.214.83/multi", "realFrom
 $getMandelbrotSet[] = array("server" => "http://192.168.214.83/multi", "realFrom" => 0,"realTo" => 1, "imaginaryFrom" => -2, "imaginaryTo" => 0, "interval" => 0.05, "maxIteration" => 255);
 ```
 
-Wir erwarten als Antwort ein Multidimensionales array:
-
-Bsp.:
+Wir erwarten als Antwort ein multidimensionales Array:
 ```
 {
  "0":
