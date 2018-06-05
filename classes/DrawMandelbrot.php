@@ -7,16 +7,33 @@
 
 class DrawMandelbrot
 {
+    /**
+     * @var
+     */
     private $sets;
+    /**
+     * @var
+     */
     private $maxIterationInSet;
 
+    /**
+     * DrawMandelbrot constructor.
+     * @param array $coord
+     * @param array $sets
+     */
     public function __construct($coord, $sets)
     {
         $this->sets = $sets;
         $this->coord = $coord;
     }
 
-    private function fillPixel($im, $count_x, $count_y, $depth, $skip)
+    /**
+     * @param resource $im
+     * @param int $count_x
+     * @param int $count_y
+     * @param int $depth
+     */
+    private function fillPixel($im, $count_x, $count_y, $depth)
     {
         /** Some Colors to play with **/
         // rgb(52,152,219)  - Light Blue
@@ -81,7 +98,7 @@ class DrawMandelbrot
                 }
                 if ($set != 0) {
                     // set pixel at the coordinate
-                    $this->fillPixel($im, $count_x, $count_y, $set, false);
+                    $this->fillPixel($im, $count_x, $count_y, $set);
                 }
                 $count_y++;
             }

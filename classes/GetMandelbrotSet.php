@@ -4,25 +4,25 @@
  * @Author: Stefan Behnert
  * @Email: st.behnert@gmail.com
  */
+
 Class GetMandelbrotSet
 {
     public $server;
     public $sets;
-    public $coord;
+    public $coordinations;
 
     /**
      * GetMandelbrotSet constructor.
-     * @String $server
-     * @array $coord
+     * @param array $coordinations
      */
-    public function __construct($server , $coord)
+    public function __construct($coordinations)
     {
-        $this->server = $server;
-        $this->coord = $coord;
+        $this->coordinations = $coordinations;
         $this->GetMandelbrotSet();
     }
+
     /**
-     * @String $url
+     * @param String $url
      * @return mixed
      */
     private function curl_get_contents($url)
@@ -40,20 +40,15 @@ Class GetMandelbrotSet
     }
 
     /**
-     * @array $postData
-     * @String $server
+     * @param array $postData
+     * @param String $server
      * @return mixed
      */
-    private function curl_post_content($postData , $server)
+    private function curl_post_content($postData, $server)
     {
         // Setup cURL
         $ch = curl_init($server);
-        curl_setopt_array($ch, array(
-            CURLOPT_POST => TRUE,
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
-            CURLOPT_POSTFIELDS => json_encode($postData))
-        );
+        curl_setopt_array($ch, array(CURLOPT_POST => TRUE, CURLOPT_RETURNTRANSFER => TRUE, CURLOPT_HTTPHEADER => array('Content-Type: application/json'), CURLOPT_POSTFIELDS => json_encode($postData)));
         // Send the request
         $response = curl_exec($ch);
         // Check for errors
@@ -66,48 +61,40 @@ Class GetMandelbrotSet
     }
 
     /**
-     * Get calculated SET of Mandelbrot
-     * from Server.
+     * Get calculated SET of Mandelbrot from Server.
      * @return array
      */
     private function GetMandelbrotSet()
     {
         /**
-         * Call API GET
+         * GET request
          */
-        //$response = $this->curl_get_contents('http://192.168.214.83/api' .
-        // '?realFrom=' . $this->realFrom .
-        // '&realTo=' . $this->realTo .
-        // '&imaginaryFrom=' . $this->imaginaryFrom .
-        // '&imaginaryTo=' . $this->imaginaryTo .
-        // '&intervall=' . $this->intervall .
-        // '&maxIteration=' . $this->maxIteration . '');
+        //$response = $this->curl_get_contents({server});
 
         /**
-         * Call API POST
+         * POST request
          */
-        $postServer = $this->server;
-
-        foreach($this->coord as $coord) {
+        foreach ($this->coordinations as $coordination) {
             $postData = array(
-                'realFrom' => $coord["realFrom"],
-                'realTo' => $coord["realTo"],
-                'imaginaryFrom' => $coord["imaginaryFrom"],
-                'imaginaryTo' => $coord["imaginaryTo"],
-                'interval' => $coord["interval"],
-                'maxIteration' => $coord["maxIteration"]
+                'realFrom' => $coordination["realFrom"],
+                'realTo' => $coordination["realTo"],
+                'imaginaryFrom' => $coordination["imaginaryFrom"],
+                'imaginaryTo' => $coordination["imaginaryTo"],
+                'interval' => $coordination["interval"],
+                'maxIteration' => $coordination["maxIteration"]
             );
-            $response = $this->curl_post_content($postData, $postServer);
+            $response = $this->curl_post_content($postData, $coordination["server"]);
             $this->sets[] = $response;
         }
 
         /**
          * DrawMandelbrot
-         * @array $this->coord
-         * @array $this->sets
+         * @param array $this->coordinations
+         * @param array $this->sets
          */
-        $drawMandelbrot = new DrawMandelbrot($this->coord, $this->sets);
+        $drawMandelbrot = new DrawMandelbrot($this->coordinations, $this->sets);
         $drawMandelbrot->DrawMandelbrot();
     }
 }
+
 ?>

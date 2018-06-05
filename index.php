@@ -18,20 +18,20 @@ ini_set('memory_limit', '-1');
 // 41 Server - Sasette
 // 69 Server - ?
 // 83 Server - Thien-An
+// 85 Server - ?
 
-$server = "http://192.168.1.6/";
 $mandelbrotCoordinates[] = array(
-    "realFrom" => -1.1883796296296296,
-    "realTo" => -1.1121425925925925,
-    "imaginaryFrom" => 0.24499722222222214,
-    "imaginaryTo" => 0.30217499999999997,
-    "interval" => 0.0001,
+    "server" => "http://192.168.214.83",
+    "realFrom" => -2,
+    "realTo" => 1,
+    "imaginaryFrom" => -1,
+    "imaginaryTo" => 1,
+    "interval" => 0.1,
     "maxIteration" => 255
 );
 
 /**
  * DrawMandelbrot constructor.
- * @String $server
- * @String $mandelbrotCoordinates
+ * @param array $mandelbrotCoordinates
  */
-new GetMandelbrotSet($server, $mandelbrotCoordinates);
+new GetMandelbrotSet($mandelbrotCoordinates);
