@@ -5,7 +5,7 @@
  * @Author: Stefan Behnert
  * @Email: st.behnert@gmail.com
  */
-class DrawMandelbrot
+class DrawMultipleMandelbrot
 {
     private $sets;
     private $coord;
@@ -40,7 +40,7 @@ class DrawMandelbrot
 
     }
 
-    public function DrawMandelbrot()
+    public function DrawMultipleMandelbrot()
     {
         // Tell Site to be Type: Image
         header("Content-Type: image/png");

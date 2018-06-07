@@ -47,13 +47,13 @@ Class GetMandelbrotSet
     private function curl_post_content($postData, $server)
     {
         // Setup cURL
-        $ch = curl_init($server);
-        curl_setopt_array($ch, array(CURLOPT_POST => TRUE, CURLOPT_RETURNTRANSFER => TRUE, CURLOPT_HTTPHEADER => array('Content-Type: application/json'), CURLOPT_POSTFIELDS => json_encode($postData)));
+        $tmp = curl_init($server);
+        curl_setopt_array($tmp, array(CURLOPT_POST => TRUE, CURLOPT_RETURNTRANSFER => TRUE, CURLOPT_HTTPHEADER => array('Content-Type: application/json'), CURLOPT_POSTFIELDS => json_encode($postData)));
         // Send the request
-        $response = curl_exec($ch);
+        $response = curl_exec($tmp);
         // Check for errors
         if ($response === FALSE) {
-            die(curl_error($ch));
+            die(curl_error($tmp));
         }
         // Decode the response
         $json = json_decode($response, true);
@@ -93,7 +93,15 @@ Class GetMandelbrotSet
          * @param array $this->sets
          */
         $drawMandelbrot = new DrawMandelbrot($this->coordinations, $this->sets);
-        $drawMandelbrot->DrawMandelbrot();
+        $drawMultipleMandelbrot = new DrawMultipleMandelbrot($this->coordinations, $this->sets);
+
+        $uri = array_slice(explode('/', rtrim($_SERVER["REQUEST_URI"]  , '/')), -1)[0];
+        if ($uri == "multi") {
+            $drawMultipleMandelbrot->DrawMultipleMandelbrot();
+        } else {
+            $drawMandelbrot->DrawMandelbrot();
+        }
+
     }
 }
 

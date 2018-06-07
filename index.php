@@ -1,7 +1,6 @@
 <?php
 /**
  * @Author: Stefan Behnert
- * @Updated: 31.05.2018
  * @Email: st.behnert@gmail.com
  */
 
@@ -17,21 +16,11 @@ ini_set('memory_limit', '-1');
 // 59 Server - Chris
 // 41 Server - Sasette
 // 69 Server - ?
-// 83 Server - Thien-An
-// 85 Server - ?
-
-$mandelbrotCoordinates[] = array(
-    "server" => "http://192.168.214.83",
-    "realFrom" => -2,
-    "realTo" => 1,
-    "imaginaryFrom" => -1,
-    "imaginaryTo" => 1,
-    "interval" => 0.1,
-    "maxIteration" => 255
-);
+// 83 Server - AN
 
 /**
- * DrawMandelbrot constructor.
- * @param array $mandelbrotCoordinates
+ * same value needed for interval and maxIteration
  */
+$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83:8080/", "realFrom" => -2,"realTo" => 1, "imaginaryFrom" => -1, "imaginaryTo" => 1, "interval" => 0.01, "maxIteration" => 255);
+
 new GetMandelbrotSet($mandelbrotCoordinates);

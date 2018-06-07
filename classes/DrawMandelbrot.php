@@ -74,14 +74,14 @@ class DrawMandelbrot
         $res_y = ($y_steps_full);
 
         // Create Image
-        $im = @imagecreate($res_x, $res_y) or die("Cannot Initialize new GD image stream");
+        $image = @imagecreate($res_x, $res_y) or die("Cannot Initialize new GD image stream");
 
         // Set colors for the image
-        $black_color = imagecolorallocatealpha($im, 0, 0, 0, 0);
-        $white_color = imagecolorallocate($im, 187, 80, 13);
+        $black_color = imagecolorallocatealpha($image, 0, 0, 0, 0);
+        $white_color = imagecolorallocate($image, 187, 80, 13);
 
         // Fill image background
-        imagefill($im, 0, 0, $black_color);
+        imagefill($image, 0, 0, $black_color);
 
         $count_x = 0;
         $count_y = 0;
@@ -98,16 +98,16 @@ class DrawMandelbrot
                 }
                 if ($set != 0) {
                     // set pixel at the coordinate
-                    $this->fillPixel($im, $count_x, $count_y, $set);
+                    $this->fillPixel($image, $count_x, $count_y, $set);
                 }
                 $count_y++;
             }
             $i++;
         }
         // Create image
-        imagepng($im);
+        imagepng($image);
         // Delete image from cache
-        imagedestroy($im);
+        imagedestroy($image);
     }
 }
 

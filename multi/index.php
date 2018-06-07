@@ -21,9 +21,9 @@ ini_set('memory_limit', '-1');
 /**
  * same value needed for interval and maxIteration
  */
-$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83/multi", "realFrom" => -2,"realTo" => 0, "imaginaryFrom" => 0, "imaginaryTo" => 1.2, "interval" => 0.01, "maxIteration" => 255);
-$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83/multi", "realFrom" => 0,"realTo" => 1, "imaginaryFrom" => 0, "imaginaryTo" => 1.2, "interval" => 0.01, "maxIteration" => 255);
-$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83/multi", "realFrom" => -2,"realTo" => 0, "imaginaryFrom" => -1.2, "imaginaryTo" => 0, "interval" => 0.01, "maxIteration" => 255);
-$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83/multi", "realFrom" => 0,"realTo" => 1, "imaginaryFrom" => -1.2, "imaginaryTo" => 0, "interval" => 0.01, "maxIteration" => 255);
+$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83:8080/multi", "realFrom" => -2,"realTo" => 0, "imaginaryFrom" => 0, "imaginaryTo" => 1.2, "interval" => 0.1, "maxIteration" => 255);
+$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83:8080/multi", "realFrom" => 0,"realTo" => 1, "imaginaryFrom" => 0, "imaginaryTo" => 1.2, "interval" => 0.1, "maxIteration" => 255);
+$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83:8080/multi", "realFrom" => -2,"realTo" => 0, "imaginaryFrom" => -1.2, "imaginaryTo" => 0, "interval" => 0.1, "maxIteration" => 255);
+$mandelbrotCoordinates[] = array("server" => "http://192.168.214.83:8080/multi", "realFrom" => 0,"realTo" => 1, "imaginaryFrom" => -1.2, "imaginaryTo" => 0, "interval" => 0.1, "maxIteration" => 255);
 
-new GetMandelbrot($mandelbrotCoordinates);
+new GetMandelbrotSet($mandelbrotCoordinates);
